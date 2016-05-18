@@ -1,0 +1,67 @@
+cabal-version:       >= 1.10
+name:                rosterium
+version:             0.1.1
+synopsis:            Select people according to a skill and demand matrix
+license:             BSD3
+license-file:        LICENCE
+author:              Andrew Cowie <andrew@operationaldynamics.com>
+maintainer:          Andrew Cowie <andrew@operationaldynamics.com>
+copyright:           © 2016 Operational Dynamics Consulting Pty Ltd, and Others
+category:            Text
+tested-with:         GHC == 7.10
+
+build-type:          Simple
+
+library
+  default-language:  Haskell2010
+
+  build-depends:     base,
+                     text
+
+  hs-source-dirs:    lib
+
+  exposed-modules:   Roster.Setup
+  other-modules:     Roster.Types
+
+  ghc-options:       -O2
+                     -threaded
+                     -Wall
+                     -Wwarn
+                     -fwarn-tabs
+
+  ghc-prof-options:  -prof -fprof-auto-top
+
+
+test-suite           check
+  default-language:  Haskell2010
+  type:              exitcode-stdio-1.0
+
+  build-depends:     base,
+                     bytestring,
+                     transformers,
+                     mtl,
+                     HUnit,
+                     hspec,
+                     text,
+                     rosterium
+
+  hs-source-dirs:    tests
+  main-is:           CheckProgram.hs
+                      
+executable           snippet
+  default-language:  Haskell2010
+
+  build-depends:     base,
+                     bytestring,
+                     text,
+                     rosterium
+
+  ghc-options:       -threaded
+                     -Wall
+                     -Wwarn
+                     -fwarn-tabs
+
+  hs-source-dirs:    tests
+  main-is:           Snippet.hs
+                      
+-- vim: set tabstop=21 expandtab:
