@@ -38,6 +38,8 @@ instance Show Talent where
     show Stunts  = "is a Self Reflexive Stunt Double"
     show Instrument = "plays an Instrument"
 
+instance Skill Talent where
+    skill x = T.pack . show $ x
 
 data Muppet = Muppet Text ByteString Role [Talent]
 

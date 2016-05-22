@@ -16,4 +16,6 @@ class Ord a => Grade a where
     grade :: a -> Text
 
 
+class Skill a where
+    skill :: a -> Text
 
