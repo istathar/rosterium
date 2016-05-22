@@ -16,8 +16,10 @@ library
   default-language:  Haskell2010
 
   build-depends:     base,
-                     hourglass,
-                     text
+                     bytestring,
+                     text,
+                     containers,
+                     hourglass
 
   hs-source-dirs:    lib
 
@@ -55,6 +57,7 @@ executable           snippet
   build-depends:     base,
                      bytestring,
                      text,
+                     hourglass,
                      rosterium
 
   ghc-options:       -threaded

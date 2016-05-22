@@ -1,4 +1,4 @@
-module Roster.Types where
+module Rosterium.Types where
 
 import Data.ByteString (ByteString)
 import qualified Data.ByteString.Char8 as S

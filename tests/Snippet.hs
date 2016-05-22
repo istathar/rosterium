@@ -9,7 +9,7 @@ import qualified Data.Text.IO as T
 import Data.Hourglass
 import Time.System
 
-import Roster.Setup
+import Rosterium.Setup
 
 main :: IO ()
 main = do

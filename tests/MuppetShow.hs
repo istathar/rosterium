@@ -12,8 +12,9 @@ import qualified Data.Text.IO as T
 import Data.Hourglass
 import Time.System
 
-import Roster.Setup
-import Roster.Types
+import Rosterium.Types
+import Rosterium.Setup
+import Rosterium.Allocate
 
 data Role = StageHand | Supporting | Main | Producer | Owner
     deriving (Eq, Enum, Ord)
