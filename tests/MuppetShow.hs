@@ -35,7 +35,7 @@ instance Show Talent where
     show Sings   = "Sings"
     show Dances  = "Dances"
     show Comedy  = "does Comedy"
-    show Stunts  = "is a Self Reflexive Stunt Double"
+    show Stunts  = "is a self-reflexive Stunt double"
     show Instrument = "plays an Instrument"
 
 instance Skill Talent where
@@ -47,6 +47,11 @@ instance Show Muppet where
     show (Muppet name handle role talents) = T.unpack name
         ++ " (" ++ S.unpack handle ++ "); a "
         ++ show role ++ " who " ++ intercalate ", " (fmap show talents)
+
+
+instance Person Muppet where
+    name (Muppet name _ _ _) = name
+    handle (Muppet _ handle _ _) = handle
 
 
 performers =

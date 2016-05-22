@@ -4,10 +4,11 @@ import Data.ByteString (ByteString)
 import qualified Data.ByteString.Char8 as S
 import Data.Text (Text)
 
-data Person = Person {
-    name :: Text,
-    handle :: ByteString
-}
+
+class Person a where
+    name :: a -> Text
+    handle :: a -> ByteString
+
 
 class Ord a => Grade a where
     --
