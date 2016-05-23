@@ -23,8 +23,9 @@ library
 
   hs-source-dirs:    lib
 
-  exposed-modules:   Roster.Setup
-  other-modules:     Roster.Types
+  exposed-modules:   Rosterium.Setup
+                     Rosterium.Allocate
+  other-modules:     Rosterium.Types
 
   ghc-options:       -O2
                      -threaded

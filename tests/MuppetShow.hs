@@ -73,4 +73,5 @@ performers =
 
 main :: IO ()
 main = do
-    putStrLn $ intercalate "\n" $ fmap show $ take 5 $ performers
+    let available = load performers
+    putStrLn $ intercalate "\n" $ fmap show $ allocate 2 available
