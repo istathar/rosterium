@@ -47,7 +47,10 @@ data Muppet = Muppet Text ByteString Role [Talent]
 instance Show Muppet where
     show (Muppet name handle role talents) = T.unpack name
         ++ " (" ++ S.unpack handle ++ "); a "
-        ++ show role ++ " who " ++ intercalate ", " (fmap show talents)
+        ++ show role ++ " who " ++
+        if null talents
+            then "has no talent"
+            else intercalate ", " (fmap show talents)
 
 
 instance Person Muppet where
@@ -73,5 +76,5 @@ performers =
 
 main :: IO ()
 main = do
-    let available = load performers
-    putStrLn $ intercalate "\n" $ fmap show $ allocate 2 available
+    let available = load performers 356928418652
+    putStrLn $ intercalate "\n" $ fmap show . rosterPeople $ allocate 24 available

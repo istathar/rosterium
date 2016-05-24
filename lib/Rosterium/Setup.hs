@@ -1,16 +1,17 @@
 module Rosterium.Setup where
 
+import System.Random
+
 import Rosterium.Types
-import Data.Sequence (Seq)
-import qualified Data.Sequence as Seq
+
+type Seed = Int
 
 --
 -- | The index into the list of people where we next resume populating the roster
 --
-
-seed :: Int
-seed = undefined
-
-
-load :: Person a => [a] -> Seq a
-load = Seq.fromList
+load :: Person a => [a] -> Seed -> Bench a
+load persons seed =
+  let
+    gen = mkStdGen seed
+  in
+    Bench persons gen

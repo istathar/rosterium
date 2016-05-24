@@ -1,8 +1,8 @@
 module Rosterium.Types where
 
 import Data.ByteString (ByteString)
-import qualified Data.ByteString.Char8 as S
 import Data.Text (Text)
+import System.Random (StdGen)
 
 
 class Person a where
@@ -20,3 +20,24 @@ class Ord a => Grade a where
 class Skill a where
     skill :: a -> Text
 
+--
+-- | The list of people eligible to be selected.  Current implementation is a
+-- basic Data.List; this wrapper gives us the flexibility to switch to
+-- something more advanced if needs be. That said, a lazy infinite list is an
+-- ideal model for drawing Rosters from.
+--
+data Bench a = Bench {
+    benchPeople :: [a],
+    benchRandom :: StdGen
+}
+
+--
+-- | The list of people who have been rostered on. The index is the position in
+-- the list of people where we next resume populating the roster
+--
+data Roster a = Roster {
+    rosterPeople :: [a]
+}
+{-
+    rosterIndex :: Int
+-}
