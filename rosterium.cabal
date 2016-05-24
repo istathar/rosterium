@@ -19,6 +19,8 @@ library
                      bytestring,
                      text,
                      containers,
+                     random,
+                     random-shuffle,
                      hourglass
 
   hs-source-dirs:    lib
@@ -59,6 +61,7 @@ executable           snippet
                      bytestring,
                      text,
                      hourglass,
+                     random,
                      random-shuffle,
                      rosterium
 
@@ -66,6 +69,8 @@ executable           snippet
                      -Wall
                      -Wwarn
                      -fwarn-tabs
+                     -fno-warn-type-defaults
+                     -fno-warn-unused-imports
 
   hs-source-dirs:    tests
   main-is:           Snippet.hs

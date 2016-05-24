@@ -1,5 +1,4 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# OPTIONS -fno-warn-unused-imports #-}
 
 module Main where
 
