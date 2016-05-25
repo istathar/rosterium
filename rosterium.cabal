@@ -61,8 +61,7 @@ executable           snippet
                      bytestring,
                      text,
                      hourglass,
-                     random,
-                     random-shuffle,
+                     mwc-random,
                      rosterium
 
   ghc-options:       -threaded
