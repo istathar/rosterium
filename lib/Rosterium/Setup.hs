@@ -1,17 +1,15 @@
 module Rosterium.Setup where
 
-import System.Random
+import Data.Vector
+import Data.Word
+import System.Random.MWC
 
 import Rosterium.Types
-
-type Seed = Int
 
 --
 -- | The index into the list of people where we next resume populating the roster
 --
-load :: Person a => [a] -> Seed -> Bench a
-load persons seed =
-  let
-    gen = mkStdGen seed
-  in
-    Bench persons gen
+load :: Person a => [a] -> Word32 -> IO (Bench a)
+load persons seed = do
+    gen <- initialize (singleton seed)
+    return (Bench persons gen)

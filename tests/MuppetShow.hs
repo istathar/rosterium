@@ -76,5 +76,7 @@ performers =
 
 main :: IO ()
 main = do
-    let available = load performers 356928418652
-    putStrLn $ intercalate "\n" $ fmap show . rosterPeople $ allocate 24 available
+    available <- load performers 3568418652
+    roster <- allocate 24 available
+
+    putStrLn $ intercalate "\n" $ fmap show . rosterPeople $ roster

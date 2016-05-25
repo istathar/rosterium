@@ -1,8 +1,10 @@
+{-# LANGUAGE ExistentialQuantification #-}
+
 module Rosterium.Types where
 
 import Data.ByteString (ByteString)
 import Data.Text (Text)
-import System.Random (StdGen)
+import System.Random.MWC (GenIO)
 
 
 class Person a where
@@ -28,7 +30,7 @@ class Skill a where
 --
 data Bench a = Bench {
     benchPeople :: [a],
-    benchRandom :: StdGen
+    benchRandom :: GenIO
 }
 
 --

@@ -1,7 +1,9 @@
 module Rosterium.Allocate where
 
-import System.Random (StdGen, split)
-import System.Random.Shuffle (shuffle')
+import Data.Vector (Vector)
+import qualified Data.Vector as V
+import Data.Word
+import System.Random.MWC
 
 import Rosterium.Types
 
@@ -10,16 +12,26 @@ import Rosterium.Types
 -- person once until the bench is exhausted, then will reshuffle the deck and
 -- resume drawing.
 --
-allocate :: Int -> Bench a -> Roster a
-allocate count (Bench avail gen) = Roster $ take count $ generate gen avail
+allocate :: Int -> Bench a -> IO (Roster a)
+allocate count bench@(Bench avail gen) =
+  let
+    width = length avail 
+  in do
+    list <- shuffle gen avail
+    if count < width
+        then return (Roster (take count list))
+        else do
+            list' <- allocate (count - width) bench
+            return undefined
 
--- infinite
-generate :: StdGen -> [a] -> [a]
-generate gen bench =
+-- HERE change this to something that shuffles using random sequence into a pqueue
+shuffle :: GenIO -> [a] -> IO [a]
+shuffle gen bench =
   let
     width = length bench
-    (gen1,gen2) = split gen
-    next = shuffle' bench width gen1
-  in
-    next ++ generate gen2 bench
+  in do
+    vs <- uniformVector gen width :: IO (Vector Word32)
+    return undefined
+    
+
 
