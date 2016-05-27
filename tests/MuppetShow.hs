@@ -45,8 +45,8 @@ instance Skill Talent where
 data Muppet = Muppet Text ByteString Role [Talent]
 
 instance Show Muppet where
-    show (Muppet name handle role talents) = T.unpack name
-        ++ " (" ++ S.unpack handle ++ "); a "
+    show (Muppet nom nick role talents) = T.unpack nom
+        ++ " (" ++ S.unpack nick ++ "); a "
         ++ show role ++ " who " ++
         if null talents
             then "has no talent"
@@ -54,10 +54,11 @@ instance Show Muppet where
 
 
 instance Person Muppet where
-    name (Muppet name _ _ _) = name
-    handle (Muppet _ handle _ _) = handle
+    name (Muppet nom _ _ _) = nom
+    handle (Muppet _ nick _ _) = nick
 
 
+performers :: [Muppet]
 performers =
     [ Muppet "Kermit the Frog" "kermit" Producer [Sings, Comedy]
     , Muppet "Miss Piggy" "piggy" Main [Sings, Dances, Comedy]
