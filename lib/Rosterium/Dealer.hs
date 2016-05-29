@@ -1,3 +1,5 @@
+{-# OPTIONS_HADDOCK hide #-}
+
 module Rosterium.Dealer where
 
 import System.Random (StdGen, split)

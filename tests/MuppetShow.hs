@@ -10,9 +10,7 @@ import qualified Data.Text.IO as T
 import Data.Hourglass
 import Time.System
 
-import Rosterium.Types
-import Rosterium.Setup
-import Rosterium.Dealer
+import Rosterium.Allocatus
 
 type Name = Text
 type Handle = Text

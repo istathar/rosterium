@@ -1,3 +1,5 @@
+{-# OPTIONS_HADDOCK hide, not-home #-}
+
 module Rosterium.Types where
 
 import Data.Text (Text)

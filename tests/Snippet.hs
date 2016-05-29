@@ -10,7 +10,7 @@ import System.Random
 import System.Random.Shuffle
 import Time.System
 
-import Rosterium.Setup
+import Rosterium.Allocatus
 
 
 main :: IO ()
