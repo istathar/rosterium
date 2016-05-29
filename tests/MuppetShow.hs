@@ -3,8 +3,6 @@
 
 module Main where
 
-import Data.ByteString (ByteString)
-import qualified Data.ByteString.Char8 as S
 import Data.List (intercalate)
 import Data.Text (Text)
 import qualified Data.Text as T
@@ -14,7 +12,10 @@ import Time.System
 
 import Rosterium.Types
 import Rosterium.Setup
-import Rosterium.Allocate
+import Rosterium.Dealer
+
+type Name = Text
+type Handle = Text
 
 data Role = StageHand | Supporting | Main | Producer | Owner
     deriving (Eq, Enum, Ord)
@@ -42,11 +43,11 @@ instance Show Talent where
 instance Skill Talent where
     skill x = T.pack . show $ x
 
-data Muppet = Muppet Text ByteString Role [Talent]
+data Muppet = Muppet Name Handle Role [Talent]
 
 instance Show Muppet where
     show (Muppet nom nick role talents) = T.unpack nom
-        ++ " (" ++ S.unpack nick ++ "); a "
+        ++ " (" ++ T.unpack nick ++ "); a "
         ++ show role ++ " who " ++
         if null talents
             then "has no talent"

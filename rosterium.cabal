@@ -1,6 +1,6 @@
 cabal-version:       >= 1.10
 name:                rosterium
-version:             0.1.1
+version:             0.1.3
 synopsis:            Select people according to a skill and demand matrix
 license:             BSD3
 license-file:        LICENCE
@@ -26,8 +26,8 @@ library
   hs-source-dirs:    lib
 
   exposed-modules:   Rosterium.Setup
-                     Rosterium.Allocate
-  other-modules:     Rosterium.Types
+                     Rosterium.Dealer
+                     Rosterium.Types
 
   ghc-options:       -O2
                      -threaded

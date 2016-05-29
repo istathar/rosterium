@@ -1,13 +1,11 @@
 module Rosterium.Types where
 
-import Data.ByteString (ByteString)
 import Data.Text (Text)
 import System.Random (StdGen)
 
-
 class Person a where
     name :: a -> Text
-    handle :: a -> ByteString
+    handle :: a -> Text -- that we will restrict at load time
 
 
 class Ord a => Grade a where

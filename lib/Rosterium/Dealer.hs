@@ -1,4 +1,4 @@
-module Rosterium.Allocate where
+module Rosterium.Dealer where
 
 import System.Random (StdGen, split)
 import System.Random.Shuffle (shuffle')
