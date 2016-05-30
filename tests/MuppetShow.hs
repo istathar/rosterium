@@ -8,6 +8,7 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import Data.Hourglass
+import Text.Render
 import Time.System
 
 import Rosterium.Allocatus
@@ -18,38 +19,41 @@ type Handle = Text
 data Role = StageHand | Supporting | Main | Producer | Owner
     deriving (Eq, Enum, Ord)
 
-instance Show Role where
-    show StageHand  = "Stage Hand"
-    show Supporting = "Supporting Character"
-    show Main       = "Main Character"
-    show Producer   = "Producer of the Show"
-    show Owner      = "Owner of the Theatre"
+instance Render Role where
+    render StageHand  = "Stage Hand"
+    render Supporting = "Supporting Character"
+    render Main       = "Main Character"
+    render Producer   = "Producer of the Show"
+    render Owner      = "Owner of the Theatre"
 
 
 instance Grade Role where
-    grade x = T.pack . show $ x
+    grade x = render x
 
 data Talent = Sings | Dances | Comedy | Stunts | Instrument
 
-instance Show Talent where
-    show Sings   = "Sings"
-    show Dances  = "Dances"
-    show Comedy  = "does Comedy"
-    show Stunts  = "is a self-reflexive Stunt double"
-    show Instrument = "plays an Instrument"
+instance Render Talent where
+    render Sings   = "Sings"
+    render Dances  = "Dances"
+    render Comedy  = "does Comedy"
+    render Stunts  = "is a self-reflexive Stunt double"
+    render Instrument = "plays an Instrument"
 
 instance Skill Talent where
-    skill x = T.pack . show $ x
+    skill x = render x
 
 data Muppet = Muppet Name Handle Role [Talent]
 
-instance Show Muppet where
-    show (Muppet nom nick role talents) = T.unpack nom
-        ++ " (" ++ T.unpack nick ++ "); a "
-        ++ show role ++ " who " ++
-        if null talents
+instance Render Muppet where
+    render (Muppet nom nick role talents) = T.concat
+        [ nom
+        , " (@" , nick , "); a "
+        , render role
+        , " who "
+        , if null talents
             then "has no talent"
-            else intercalate ", " (fmap show talents)
+            else T.intercalate ", " (fmap render talents)
+        ]
 
 
 instance Person Muppet where
@@ -77,4 +81,4 @@ performers =
 main :: IO ()
 main = do
     let available = load performers 356928418652
-    putStrLn $ intercalate "\n" $ fmap show . rosterPeople $ allocate 24 available
+    T.putStrLn $ T.intercalate "\n" $ fmap render . rosterPeople $ allocate 24 available
