@@ -12,11 +12,12 @@ import System.Random.MWC
 import Time.System
 
 import Rosterium.Allocatus
+import Rosterium.Dealer
 
 
 main :: IO ()
 main = do
-    vs <- withSystemRandom . asGenIO $ \gen -> uniformVector gen 3 :: IO (Vector Word8)
+    vs <- withSystemRandom . asGenIO $ \gen -> shuffle gen [1,2,3,4]
     print vs
 
 hourglass :: IO ()

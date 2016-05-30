@@ -19,8 +19,8 @@ library
                      bytestring,
                      text,
                      containers,
-                     random,
-                     random-shuffle,
+                     mwc-random,
+                     vector,
                      hourglass
 
   hs-source-dirs:    lib

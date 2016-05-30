@@ -8,6 +8,8 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import Data.Hourglass
+import qualified Data.Vector as V
+import System.Random.MWC
 import Time.System
 
 import Rosterium.Allocatus
@@ -76,7 +78,9 @@ performers =
 
 main :: IO ()
 main = do
-    available <- load performers 3568418652
-    roster <- allocate 24 available
+--  gen <- createSystemRandom
+    gen <- initialize (V.singleton 3)
+    available <- load performers gen
+    roster <- allocate 13 available
 
     putStrLn $ intercalate "\n" $ fmap show . rosterPeople $ roster
