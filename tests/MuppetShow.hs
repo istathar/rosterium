@@ -3,8 +3,6 @@
 
 module Main where
 
-import Data.ByteString (ByteString)
-import qualified Data.ByteString.Char8 as S
 import Data.List (intercalate)
 import Data.Text (Text)
 import qualified Data.Text as T
@@ -12,9 +10,10 @@ import qualified Data.Text.IO as T
 import Data.Hourglass
 import Time.System
 
-import Rosterium.Types
-import Rosterium.Setup
-import Rosterium.Allocate
+import Rosterium.Allocatus
+
+type Name = Text
+type Handle = Text
 
 data Role = StageHand | Supporting | Main | Producer | Owner
     deriving (Eq, Enum, Ord)
@@ -42,11 +41,11 @@ instance Show Talent where
 instance Skill Talent where
     skill x = T.pack . show $ x
 
-data Muppet = Muppet Text ByteString Role [Talent]
+data Muppet = Muppet Name Handle Role [Talent]
 
 instance Show Muppet where
-    show (Muppet name handle role talents) = T.unpack name
-        ++ " (" ++ S.unpack handle ++ "); a "
+    show (Muppet nom nick role talents) = T.unpack nom
+        ++ " (" ++ T.unpack nick ++ "); a "
         ++ show role ++ " who " ++
         if null talents
             then "has no talent"
@@ -54,10 +53,11 @@ instance Show Muppet where
 
 
 instance Person Muppet where
-    name (Muppet name _ _ _) = name
-    handle (Muppet _ handle _ _) = handle
+    name (Muppet nom _ _ _) = nom
+    handle (Muppet _ nick _ _) = nick
 
 
+performers :: [Muppet]
 performers =
     [ Muppet "Kermit the Frog" "kermit" Producer [Sings, Comedy]
     , Muppet "Miss Piggy" "piggy" Main [Sings, Dances, Comedy]

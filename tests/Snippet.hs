@@ -11,7 +11,7 @@ import Data.Word
 import System.Random.MWC
 import Time.System
 
-import Rosterium.Setup
+import Rosterium.Allocatus
 
 
 main :: IO ()

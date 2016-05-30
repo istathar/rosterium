@@ -1,3 +1,5 @@
+{-# OPTIONS_HADDOCK hide #-}
+
 module Rosterium.Setup where
 
 import Data.Vector

@@ -4,7 +4,7 @@ module Main where
 
 import Test.Hspec
 
-import Rosterium.Setup
+import Rosterium.Allocatus
 
 main :: IO ()
 main = hspec suite

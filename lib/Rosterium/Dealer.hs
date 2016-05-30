@@ -1,4 +1,6 @@
-module Rosterium.Allocate where
+{-# OPTIONS_HADDOCK hide #-}
+
+module Rosterium.Dealer where
 
 import Data.Vector (Vector)
 import qualified Data.Vector as V

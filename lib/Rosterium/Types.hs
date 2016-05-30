@@ -1,15 +1,13 @@
-{-# LANGUAGE ExistentialQuantification #-}
+{-# OPTIONS_HADDOCK hide, not-home #-}
 
 module Rosterium.Types where
 
-import Data.ByteString (ByteString)
 import Data.Text (Text)
 import System.Random.MWC (GenIO)
 
-
 class Person a where
     name :: a -> Text
-    handle :: a -> ByteString
+    handle :: a -> Text -- that we will restrict at load time
 
 
 class Ord a => Grade a where
