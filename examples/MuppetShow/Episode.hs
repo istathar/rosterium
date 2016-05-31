@@ -1,6 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS -fno-warn-unused-imports #-}
 
+{-
+    Run this example by doing
+
+    $ stack runghc -- -ilib:examples examples/MuppetShow/Episode.hs
+
+    or similar.
+-}
+
 module MuppetShow.Episode where
 
 import Data.List (intercalate)
@@ -13,9 +21,7 @@ import MuppetShow.Cast
 
 main :: IO ()
 main = do
---  gen <- createSystemRandom
-    gen <- initialize (V.singleton 3)
-    available <- load performers gen
+    available <- load' performers 3141592
     roster <- allocate 13 available
 
     putStrLn $ intercalate "\n" $ fmap show . rosterPeople $ roster
