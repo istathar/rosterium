@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS -fno-warn-unused-imports #-}
 
-module Main where
+module MuppetShow.Cast where
 
 import Data.List (intercalate)
 import Data.Text (Text)
@@ -74,13 +74,3 @@ performers =
     , Muppet "Scooter" "scooter" StageHand []
     , Muppet "Scooter's Uncle" "miser" Owner []
     ]
-
-
-main :: IO ()
-main = do
---  gen <- createSystemRandom
-    gen <- initialize (V.singleton 3)
-    available <- load performers gen
-    roster <- allocate 13 available
-
-    putStrLn $ intercalate "\n" $ fmap show . rosterPeople $ roster
