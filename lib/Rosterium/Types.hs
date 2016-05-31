@@ -32,6 +32,12 @@ data Bench a = Bench {
 }
 
 --
+-- This is just 'filter' obviously
+--
+restrict :: (a -> Bool) -> Bench a -> Bench a
+restrict p (Bench people gen) = Bench (filter p people) gen
+
+--
 -- | The list of people who have been rostered on. The index is the position in
 -- the list of people where we next resume populating the roster
 --
