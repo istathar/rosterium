@@ -2,7 +2,7 @@
 {-# OPTIONS -fno-warn-unused-imports #-}
 
 {-
-    Run this example by doing
+    Run this example by doing:
 
     $ stack runghc -- -ilib:examples examples/MuppetShow/Episode.hs
 
@@ -19,10 +19,22 @@ import qualified Data.Text.IO as T
 import Rosterium.Allocatus
 import MuppetShow.Cast
 
+singers :: Muppet -> Bool
+singers (Muppet _ _ _ talents) = Sings `elem` talents
+
+{-
+    roster <- buildRoster $ do
+-}
 main :: IO ()
 main = do
-    available <- load' performers 3141592
-    roster <- allocate 13 available
+    roster $ do
+        load performers
+        restrict singers
+        allocate 2
 
+    roster' 3141592 $ do
+        load performers 
+        allocate 13
+{-
     putStrLn $ intercalate "\n" $ fmap show . rosterPeople $ roster
-
+-}

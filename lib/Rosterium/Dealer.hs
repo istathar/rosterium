@@ -2,6 +2,7 @@
 
 module Rosterium.Dealer where
 
+import Control.Monad.State
 import qualified Data.Map.Strict as Map
 import Data.Vector (Vector)
 import qualified Data.Vector as V
@@ -9,33 +10,37 @@ import Data.Word
 import System.Random.MWC
 
 import Rosterium.Types
+import Rosterium.Setup
 
 --
 -- | Draw count randomly from the bench of people available. Will chose each
 -- person once until the bench is exhausted, then will reshuffle the deck and
 -- resume drawing.
 --
-allocate :: Int -> Bench a -> IO (Roster a)
-allocate count bench = do
-    result <- allocate' count bench
-    return (Roster result)
+allocate :: Person p => Int -> RosterBuilder p [p]
+allocate count = do
+    current <- get
+    let bench = rosterBench current
+    let gen = rosterRandom current
+    result <- liftIO $ allocateN count bench gen
+    return result
 
-allocate' :: Int -> Bench a -> IO [a]
-allocate' count bench@(Bench avail gen) = do
+allocateN :: Int -> [p] -> GenIO -> IO [p]
+allocateN count avail gen = do
     let width = length avail 
     list <- shuffle gen avail
     if count < width
         then do
             return (take count list)
         else do
-            list' <- allocate' (count - width) bench
+            list' <- allocateN (count - width) avail gen
             return (list ++ list')
 
 --
 -- Generate a random array, use those values as keys to insert list elements
 -- into a Map, then read the map out in key order to result in a shuffled list.
 --
-shuffle :: GenIO -> [a] -> IO [a]
+shuffle :: GenIO -> [p] -> IO [p]
 shuffle gen values =
   let
     width = length values

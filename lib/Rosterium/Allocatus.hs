@@ -6,8 +6,9 @@ module Rosterium.Allocatus
     Grade(..),
     Skill(..),
     Person(..),
+    roster,
+    roster',
     load,
-    load',
     allocate
 )
 where

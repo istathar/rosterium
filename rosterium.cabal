@@ -21,6 +21,7 @@ library
                      containers,
                      mwc-random,
                      vector,
+                     mtl,
                      hourglass
 
   hs-source-dirs:    lib
