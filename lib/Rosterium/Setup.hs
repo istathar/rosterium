@@ -9,7 +9,8 @@ module Rosterium.Setup (
     roster,
     roster',
     load,
-    restrict
+    restrict,
+    allocate
 ) where
 
 import Control.Monad.State
@@ -89,3 +90,17 @@ restrict predicate = do
         rosterSelected = selected'
     }
     put update
+
+--
+-- | Draw count randomly from the bench of people available. Will chose each
+-- person once until the bench is exhausted, then will reshuffle the deck and
+-- resume drawing.
+--
+allocate :: Person p => Int -> RosterBuilder p [p]
+allocate count = do
+    current <- get
+    let bench = rosterSelected current
+    let gen = rosterRandom current
+    result <- liftIO $ allocateN count bench gen
+    return result
+

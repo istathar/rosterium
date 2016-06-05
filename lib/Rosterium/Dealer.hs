@@ -12,19 +12,6 @@ import System.Random.MWC
 import Rosterium.Types
 import Rosterium.Setup
 
---
--- | Draw count randomly from the bench of people available. Will chose each
--- person once until the bench is exhausted, then will reshuffle the deck and
--- resume drawing.
---
-allocate :: Person p => Int -> RosterBuilder p [p]
-allocate count = do
-    current <- get
-    let bench = rosterBench current
-    let gen = rosterRandom current
-    result <- liftIO $ allocateN count bench gen
-    return result
-
 allocateN :: Int -> [p] -> GenIO -> IO [p]
 allocateN count avail gen = do
     let width = length avail 
