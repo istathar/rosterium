@@ -17,5 +17,6 @@ where
 import Rosterium.Types
 import Rosterium.Setup
 import Rosterium.Dealer
+import Text.Render
 
 
