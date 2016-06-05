@@ -30,6 +30,7 @@ library
                      Rosterium.Dealer
                      Rosterium.Types
                      Rosterium.Setup
+                     Text.Render
 
   ghc-options:       -O2
                      -threaded

@@ -10,10 +10,10 @@ import qualified Data.Text.IO as T
 import Data.Hourglass
 import qualified Data.Vector as V
 import System.Random.MWC
-import Text.Render
 import Time.System
 
 import Rosterium.Allocatus
+import Text.Render
 
 type Name = Text
 type Handle = Text
