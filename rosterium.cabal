@@ -1,6 +1,6 @@
 cabal-version:       >= 1.10
 name:                rosterium
-version:             0.2.1
+version:             0.3.2
 synopsis:            Select people according to a skill and demand matrix
 license:             BSD3
 license-file:        LICENCE
@@ -19,16 +19,17 @@ library
                      bytestring,
                      text,
                      containers,
-                     random,
-                     random-shuffle,
+                     mwc-random,
+                     vector,
+                     mtl,
                      hourglass
 
   hs-source-dirs:    lib
 
   exposed-modules:   Rosterium.Allocatus
-  other-modules:     Rosterium.Setup
                      Rosterium.Dealer
                      Rosterium.Types
+                     Rosterium.Setup
 
   ghc-options:       -O2
                      -threaded
@@ -62,8 +63,7 @@ executable           snippet
                      bytestring,
                      text,
                      hourglass,
-                     random,
-                     random-shuffle,
+                     mwc-random,
                      rosterium
 
   ghc-options:       -threaded

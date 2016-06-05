@@ -3,9 +3,9 @@
 module Rosterium.Types where
 
 import Data.Text (Text)
-import System.Random (StdGen)
+import System.Random.MWC (GenIO)
 
-class Person a where
+class Show a => Person a where
     name :: a -> Text
     handle :: a -> Text -- that we will restrict at load time
 
@@ -28,16 +28,10 @@ class Skill a where
 --
 data Bench a = Bench {
     benchPeople :: [a],
-    benchRandom :: StdGen
+    benchRandom :: GenIO
 }
 
 --
 -- | The list of people who have been rostered on. The index is the position in
 -- the list of people where we next resume populating the roster
 --
-data Roster a = Roster {
-    rosterPeople :: [a]
-}
-{-
-    rosterIndex :: Int
--}

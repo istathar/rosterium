@@ -1,13 +1,15 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS -fno-warn-unused-imports #-}
 
-module Main where
+module MuppetShow.Cast where
 
 import Data.List (intercalate)
 import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import Data.Hourglass
+import qualified Data.Vector as V
+import System.Random.MWC
 import Text.Render
 import Time.System
 
@@ -31,6 +33,7 @@ instance Grade Role where
     grade x = render x
 
 data Talent = Sings | Dances | Comedy | Stunts | Instrument
+    deriving Eq
 
 instance Render Talent where
     render Sings   = "Sings"
@@ -76,9 +79,3 @@ performers =
     , Muppet "Scooter" "scooter" StageHand []
     , Muppet "Scooter's Uncle" "miser" Owner []
     ]
-
-
-main :: IO ()
-main = do
-    let available = load performers 356928418652
-    T.putStrLn $ T.intercalate "\n" $ fmap render . rosterPeople $ allocate 24 available
