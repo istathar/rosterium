@@ -1,12 +1,16 @@
 module Rosterium.Allocatus 
 (
     Bench(..),
+    restrict,
     Roster(..),
     Grade(..),
     Skill(..),
     Person(..),
+    roster,
+    roster',
     load,
-    allocate
+    allocate,
+    label
 )
 where
 
