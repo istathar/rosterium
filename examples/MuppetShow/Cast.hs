@@ -50,8 +50,8 @@ data Muppet = Muppet Name Handle Role [Talent]
 instance Render Muppet where
     render (Muppet nom nick role talents) = T.concat
         [ nom
-        , " (@" , nick , "); a "
-        , render role
+        , " (@" , nick , "); "
+        , indefinite (render role)
         , " who "
         , if null talents
             then "has no talent"
