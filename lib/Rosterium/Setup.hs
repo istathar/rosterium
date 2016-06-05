@@ -100,6 +100,8 @@ allocate count = do
     current <- get
     let bench = rosterBenchList current
     let gen = rosterRandomGen current
-    result <- liftIO $ allocateN count bench gen
-    return result
+    liftIO $ do
+        result <- allocateN count bench gen
+        mapM_ (putStrLn . show) result
+        return result
 

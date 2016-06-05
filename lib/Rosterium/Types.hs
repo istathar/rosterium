@@ -5,7 +5,7 @@ module Rosterium.Types where
 import Data.Text (Text)
 import System.Random.MWC (GenIO)
 
-class Person a where
+class Show a => Person a where
     name :: a -> Text
     handle :: a -> Text -- that we will restrict at load time
 

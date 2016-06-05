@@ -32,6 +32,8 @@ main = do
         restrict singers
         allocate 2
 
+    putStrLn "\n"
+
     roster' 3141592 $ do
         load performers 
         allocate 13
