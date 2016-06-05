@@ -9,7 +9,8 @@ module Rosterium.Allocatus
     roster,
     roster',
     load,
-    allocate
+    allocate,
+    label
 )
 where
 

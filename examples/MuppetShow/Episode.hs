@@ -22,22 +22,17 @@ import MuppetShow.Cast
 singers :: Muppet -> Bool
 singers (Muppet _ _ _ talents) = Sings `elem` talents
 
-{-
-    roster <- buildRoster $ do
--}
 main :: IO ()
 main = do
     roster $ do
+        label "Random singers"
         load performers
         restrict singers
         allocate 2
 
-    putStrLn "\n"
-
     roster' 3141592 $ do
+        label "Baker's dozen"
         load performers 
         allocate 13
-{-
-    putStrLn $ intercalate "\n" $ fmap show . rosterPeople $ roster
--}
+
     return ()

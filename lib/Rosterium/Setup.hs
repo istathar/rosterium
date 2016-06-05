@@ -10,10 +10,14 @@ module Rosterium.Setup (
     roster',
     load,
     restrict,
-    allocate
+    allocate,
+    label
 ) where
 
 import Control.Monad.State
+import Data.Text (Text)
+import qualified Data.Text as T
+import qualified Data.Text.IO as T
 import qualified Data.Vector as V
 import System.Random.MWC (GenIO, createSystemRandom, initialize)
 
@@ -103,5 +107,17 @@ allocate count = do
     liftIO $ do
         result <- allocateN count bench gen
         mapM_ (putStrLn . show) result
+        putStrLn ""
         return result
 
+--
+-- | Output a heading and underline it.
+--
+label :: MonadIO m => String -> m ()
+label text =
+  let
+    width = length text
+  in liftIO $ do
+    putStrLn text
+    putStrLn $ replicate width '-'
+    putStrLn ""
