@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE RankNTypes #-}
@@ -23,7 +24,7 @@ import System.Random.MWC (GenIO, createSystemRandom, initialize)
 
 import Rosterium.Types (Person)
 import Rosterium.Dealer (allocateN)
-import Text.Render
+import Text.Render (render)
 
 --
 -- Roster is now a state object used when building.
@@ -107,7 +108,7 @@ restrict predicate = do
 -- person once until the bench is exhausted, then will reshuffle the deck and
 -- resume drawing.
 --
-allocate :: Person p => Int -> RosterBuilder p [p]
+allocate :: Person p => Int -> RosterBuilder p ()
 allocate count = do
     current <- get
     let bench = rosterBenchList current
@@ -116,16 +117,15 @@ allocate count = do
         result <- allocateN count bench gen
         mapM_ (T.putStrLn . render) result
         putStrLn ""
-        return result
 
 --
 -- | Output a heading and underline it.
 --
-label :: MonadIO m => String -> m ()
+label :: MonadIO m => Text -> m ()
 label text =
   let
-    width = length text
+    width = T.length text
   in liftIO $ do
-    putStrLn text
-    putStrLn $ replicate width '-'
-    putStrLn ""
+    T.putStrLn text
+    T.putStrLn $ T.replicate width "-"
+    T.putStrLn ""

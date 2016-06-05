@@ -2,14 +2,11 @@
 
 module Rosterium.Dealer where
 
-import Control.Monad.State
 import qualified Data.Map.Strict as Map
 import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Data.Word
 import System.Random.MWC
-
-import Rosterium.Types
 
 allocateN :: Int -> [p] -> GenIO -> IO [p]
 allocateN count avail gen = do

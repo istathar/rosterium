@@ -1,10 +1,10 @@
 module Rosterium.Allocatus 
 (
-    Bench(..),
     restrict,
     Roster(..),
     Grade(..),
     Skill(..),
+    Render(..),
     Person(..),
     roster,
     roster',
@@ -16,7 +16,6 @@ where
 
 import Rosterium.Types
 import Rosterium.Setup
-import Rosterium.Dealer
 import Text.Render
 
 
