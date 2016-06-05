@@ -32,11 +32,11 @@ data Roster p = Roster {
 -- | The RosterBuilder monad allows you to abuse do-notation to
 -- setup a 'Roster' object.
 --
-newtype RosterBuilder p a = RosterBuilder (StateT (Roster p) IO a)
+newtype RosterBuilder p a = Construct (StateT (Roster p) IO a)
   deriving (Functor, Applicative, Monad, MonadState (Roster p), MonadIO)
 
-roster :: Person p => StateT (Roster p) IO a -> IO (Roster p)
-roster monad = do
+roster :: Person p => RosterBuilder p a -> IO (Roster p)
+roster (Construct monad) = do
     gen <- createSystemRandom
     execBuilder gen monad
 
@@ -46,8 +46,8 @@ roster monad = do
 -- | Return a Bench whose internal random number generator state is seeded by
 -- the supplied number.
 --
-roster' :: Person p => Int -> StateT (Roster p) IO a -> IO (Roster p)
-roster' number monad =
+roster' :: Person p => Int -> RosterBuilder p a -> IO (Roster p)
+roster' number (Construct monad) =
   let
     vector = V.singleton (fromIntegral number)
   in do
@@ -67,7 +67,7 @@ execBuilder gen monad = do
 -- | Holds the random number generator state so that we can continue to draw from
 -- the same sequence as we continue populating rosters.
 --
-load :: Person p => [p] -> StateT (Roster p) IO ()
+load :: Person p => [p] -> RosterBuilder p ()
 load persons = do
     current <- get
     let update = current {
@@ -80,7 +80,7 @@ load persons = do
 --
 -- This is just 'filter' obviously
 --
-restrict :: Person p => (p -> Bool) -> StateT (Roster p) IO ()
+restrict :: Person p => (p -> Bool) -> RosterBuilder p ()
 restrict predicate = do
     current <- get
     let selected = rosterSelected current
