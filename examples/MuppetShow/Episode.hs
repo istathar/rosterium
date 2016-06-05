@@ -1,5 +1,4 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# OPTIONS -fno-warn-unused-imports #-}
 
 {-
     Run this example by doing:
@@ -10,11 +9,6 @@
 -}
 
 module MuppetShow.Episode where
-
-import Data.List (intercalate)
-import Data.Text (Text)
-import qualified Data.Text as T
-import qualified Data.Text.IO as T
 
 import Rosterium.Allocatus
 import MuppetShow.Cast
@@ -35,4 +29,3 @@ main = do
         load performers
         allocate 13
 
-    return ()

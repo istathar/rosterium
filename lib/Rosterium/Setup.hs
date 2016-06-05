@@ -41,26 +41,35 @@ data Roster p = Roster {
 newtype RosterBuilder p a = Construct (StateT (Roster p) IO a)
   deriving (Functor, Applicative, Monad, MonadState (Roster p), MonadIO)
 
-roster :: Person p => RosterBuilder p a -> IO (Roster p)
+--
+-- | Carry out a roster allocation.
+--
+{-
+    In both cases, we throw away the result of running the state monad; in the
+    current version we assume the allocate action emits something to stdout.
+    I'd prefer something a bit more pure but at present this makes for a
+    useable enough DSL.
+-}
+roster :: Person p => RosterBuilder p a -> IO ()
 roster (Construct monad) = do
     gen <- createSystemRandom
-    execBuilder gen monad
-
-
+    _   <- execBuilder gen monad
+    return ()
 
 --
--- | Return a Bench whose internal random number generator state is seeded by
--- the supplied number.
+-- | Carry out a roster allocation where the internal random number generator
+-- state is seeded by the supplied number.
 --
-roster' :: Person p => Int -> RosterBuilder p a -> IO (Roster p)
+roster' :: Person p => Int -> RosterBuilder p a -> IO ()
 roster' number (Construct monad) =
   let
     vector = V.singleton (fromIntegral number)
   in do
     gen <- initialize vector
-    execBuilder gen monad
+    _   <- execBuilder gen monad
+    return ()
 
-execBuilder :: GenIO -> StateT (Roster p) IO a -> IO (Roster p)
+execBuilder :: Person p => GenIO -> StateT (Roster p) IO a -> IO (Roster p)
 execBuilder gen monad = do
     let initial = Roster {
         rosterRandomGen = gen,
@@ -79,8 +88,6 @@ load persons = do
         rosterBenchList = persons
     }
     put update
-
-
 
 --
 -- This is just 'filter' obviously
