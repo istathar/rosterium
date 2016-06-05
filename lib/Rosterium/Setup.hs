@@ -23,6 +23,7 @@ import System.Random.MWC (GenIO, createSystemRandom, initialize)
 
 import Rosterium.Types (Person)
 import Rosterium.Dealer (allocateN)
+import Text.Render
 
 --
 -- Roster is now a state object used when building.
@@ -106,7 +107,7 @@ allocate count = do
     let gen = rosterRandomGen current
     liftIO $ do
         result <- allocateN count bench gen
-        mapM_ (putStrLn . show) result
+        mapM_ (T.putStrLn . render) result
         putStrLn ""
         return result
 
