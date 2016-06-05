@@ -1,6 +1,6 @@
 cabal-version:       >= 1.10
 name:                rosterium
-version:             0.3.2
+version:             0.4.1
 synopsis:            Select people according to a skill and demand matrix
 license:             BSD3
 license-file:        LICENCE
