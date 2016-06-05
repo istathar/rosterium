@@ -10,7 +10,6 @@ import Data.Word
 import System.Random.MWC
 
 import Rosterium.Types
-import Rosterium.Setup
 
 allocateN :: Int -> [p] -> GenIO -> IO [p]
 allocateN count avail gen = do

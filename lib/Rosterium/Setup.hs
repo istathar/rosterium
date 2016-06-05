@@ -15,17 +15,17 @@ module Rosterium.Setup (
 
 import Control.Monad.State
 import qualified Data.Vector as V
-import System.Random.MWC
+import System.Random.MWC (GenIO, createSystemRandom, initialize)
 
-import Rosterium.Types
+import Rosterium.Types (Person)
+import Rosterium.Dealer (allocateN)
 
 --
 -- Roster is now a state object used when building.
 --
 data Roster p = Roster {
-    rosterRandom   :: GenIO,
-    rosterBench    :: Person p => [p],
-    rosterSelected :: Person p => [p]
+    rosterRandomGen :: GenIO,
+    rosterBenchList :: Person p => [p]
 }
 
 
@@ -58,9 +58,8 @@ roster' number (Construct monad) =
 execBuilder :: GenIO -> StateT (Roster p) IO a -> IO (Roster p)
 execBuilder gen monad = do
     let initial = Roster {
-        rosterRandom = gen,
-        rosterBench = [],
-        rosterSelected = []
+        rosterRandomGen = gen,
+        rosterBenchList = []
     }
     execStateT monad initial
 
@@ -72,7 +71,7 @@ load :: Person p => [p] -> RosterBuilder p ()
 load persons = do
     current <- get
     let update = current {
-        rosterBench = persons
+        rosterBenchList = persons
     }
     put update
 
@@ -84,10 +83,10 @@ load persons = do
 restrict :: Person p => (p -> Bool) -> RosterBuilder p ()
 restrict predicate = do
     current <- get
-    let selected = rosterSelected current
+    let selected = rosterBenchList current
     let selected' = filter predicate selected
     let update = current {
-        rosterSelected = selected'
+        rosterBenchList = selected'
     }
     put update
 
@@ -99,8 +98,8 @@ restrict predicate = do
 allocate :: Person p => Int -> RosterBuilder p [p]
 allocate count = do
     current <- get
-    let bench = rosterSelected current
-    let gen = rosterRandom current
+    let bench = rosterBenchList current
+    let gen = rosterRandomGen current
     result <- liftIO $ allocateN count bench gen
     return result
 

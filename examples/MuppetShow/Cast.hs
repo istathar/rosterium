@@ -32,6 +32,7 @@ instance Grade Role where
     grade x = T.pack . show $ x
 
 data Talent = Sings | Dances | Comedy | Stunts | Instrument
+    deriving Eq
 
 instance Show Talent where
     show Sings   = "Sings"

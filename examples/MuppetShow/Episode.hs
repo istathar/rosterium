@@ -38,3 +38,4 @@ main = do
 {-
     putStrLn $ intercalate "\n" $ fmap show . rosterPeople $ roster
 -}
+    return ()
