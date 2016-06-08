@@ -31,7 +31,8 @@ import Text.Render (render)
 --
 data Roster p = Roster {
     rosterRandomGen :: GenIO,
-    rosterBenchList :: Person p => [p]
+    rosterBenchList :: Person p => [p],
+    rosterLeftovers :: Person p => [p]
 }
 
 
@@ -74,7 +75,8 @@ execBuilder :: Person p => GenIO -> StateT (Roster p) IO a -> IO (Roster p)
 execBuilder gen monad = do
     let initial = Roster {
         rosterRandomGen = gen,
-        rosterBenchList = []
+        rosterBenchList = [],
+        rosterLeftovers = []
     }
     execStateT monad initial
 
@@ -86,7 +88,8 @@ load :: Person p => [p] -> RosterBuilder p ()
 load persons = do
     current <- get
     let update = current {
-        rosterBenchList = persons
+        rosterBenchList = persons,
+        rosterLeftovers = []
     }
     put update
 
@@ -113,10 +116,18 @@ allocate count = do
     current <- get
     let bench = rosterBenchList current
     let gen = rosterRandomGen current
-    liftIO $ do
-        result <- allocateN count bench gen
+    let leftover = rosterLeftovers current
+
+    leftover' <- liftIO $ do
+        (result, remains) <- allocateN count leftover bench gen
         mapM_ (T.putStrLn . render) result
         putStrLn ""
+        return remains
+
+    let update = current {
+        rosterLeftovers = leftover'
+    }
+    put update
 
 --
 -- | Output a heading and underline it.
