@@ -8,16 +8,17 @@ import qualified Data.Vector as V
 import Data.Word
 import System.Random.MWC
 
-allocateN :: Int -> [p] -> GenIO -> IO [p]
-allocateN count avail gen = do
+allocateN :: Int -> [p] -> [p] -> GenIO -> IO ([p],[p])
+allocateN count leftover bench gen = do
+    list <- shuffle gen bench
+    let avail = leftover ++ list
     let width = length avail
-    list <- shuffle gen avail
     if count < width
         then do
-            return (take count list)
+            return (splitAt count avail)
         else do
-            list' <- allocateN (count - width) avail gen
-            return (list ++ list')
+            (list',remains) <- allocateN (count - width) [] bench gen
+            return (avail ++ list', remains)
 
 --
 -- Generate a random array, use those values as keys to insert list elements

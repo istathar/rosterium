@@ -1,6 +1,6 @@
 cabal-version:       >= 1.10
 name:                rosterium
-version:             0.4.3
+version:             0.4.4
 synopsis:            Select people according to a skill and demand matrix
 license:             BSD3
 license-file:        LICENCE
@@ -65,6 +65,7 @@ executable           snippet
                      text,
                      hourglass,
                      mwc-random,
+                     vector,
                      rosterium
 
   ghc-options:       -threaded
